@@ -1,0 +1,103 @@
+----------------------------------------------------------------------
+						TABLES in ORACLE
+----------------------------------------------------------------------
+Table Name: member_master
+
+Attributes: memberCode PK
+			memberType [student|faculty] CHECK
+			name
+			bookIssueLimit
+			totalBookIssued
+
+CREATE QUERY- 
+
+CREATE TABLE member_master(
+memberCode varchar(10) PRIMARY KEY,
+memberType varchar(20) NOT NULL,
+name varchar(30) NOT NULL,
+bookIssueLimit number(30) NOT NULL,
+totalBookIssued number(30) NOT NULL,
+CONSTRAINT memberType_check CHECK(memberType IN('student','faculty'))
+);
+
+			
+VALUES: 
+
+INSERT INTO member_master VALUES('M101','student','komal',3,2);
+INSERT INTO member_master VALUES('M102','faculty','renu',25,10);
+INSERT INTO member_master VALUES('M103','student','kavita',3,2);
+INSERT INTO member_master VALUES('M104','faculty','archana',25,5);
+INSERT INTO member_master VALUES('M105','student','chetali',3,1);
+INSERT INTO member_master VALUES('M106','faculty','poonam',25,7);
+INSERT INTO member_master VALUES('M107','student','pooja',3,1);
+INSERT INTO member_master VALUES('M108','faculty','mariyam',25,3);
+INSERT INTO member_master VALUES('M109','student','kiran',3,2);
+INSERT INTO member_master VALUES('M1010','faculty','mayur',25,20);
+---------------------------------------------------------------------
+
+Table Name: book_master
+
+Attributes: bookCode PK
+			bookTitle
+			bookAuthor
+			isBookIssue 
+
+CREATE QUERY-
+
+CREATE TABLE book_master(
+bookCode varchar(10) PRIMARY KEY,
+bookTitle varchar(30) NOT NULL,
+bookAuthor varchar(25) NOT NULL,
+isBookIssue char(1) NOT NULL
+);
+
+VALUES:
+
+INSERT INTO book_master VALUES('B101','Java','James Gosling','Y');
+INSERT INTO book_master VALUES('B102','Oracle','John','N');
+INSERT INTO book_master VALUES('B103','Python','Juli','N');
+INSERT INTO book_master VALUES('B104','Scala','S M K','N');
+INSERT INTO book_master VALUES('B105','CPP','Bella','Y');
+INSERT INTO book_master VALUES('B106','Lets C','Ron','N');
+INSERT INTO book_master VALUES('B107','AngularJS','Smita Singh','N');
+INSERT INTO book_master VALUES('B108','NodeJS','Kelly','N');
+INSERT INTO book_master VALUES('B109','UMLs','Diana','N');
+INSERT INTO book_master VALUES('B1010','Java EE','Tom','Y');
+
+----------------------------------------------------------------------
+
+Table Name: book_issue_returns
+
+Attributes:	issueSerialNumber PK
+			bookCode FK book_master
+			memberCode FK member_master
+			dateOfIssue default sysdate 
+			dueDateOfReturn date
+SEQUENCE QUERY-
+CREATE SEQUENCE issue_sr_no_seq;
+
+			
+CREATE QUERY-
+
+CREATE TABLE book_issue_returns(
+issueSerialNumber number(10) PRIMARY KEY,
+bookCode REFERENCES book_master(bookCode),
+memberCode REFERENCES member_master(memberCode),
+dateOfIssue date default sysdate NOT NULL,
+dueDateOfReturn date
+);
+
+VALUES: 
+
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B101','M102','25-sep-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B103','M101','20-aug-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B105','M103','22-aug-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B108','M109','21-sep-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B1010','M107','25-aug-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B102','M108','15-sep-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B106','M104','13-aug-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B109','M1010','12-sep-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B101','M106','05-sep-2020');
+INSERT INTO book_issue_returns(issueSerialNumber,bookCode,memberCode,dueDateOfReturn) VALUES(issue_sr_no_seq.nextval,'B1010','M105','13-sep-2020');
+
+----------------------------------------------------------------------
