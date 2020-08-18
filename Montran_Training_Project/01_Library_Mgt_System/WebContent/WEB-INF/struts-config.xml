@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+<struts-config>
+	<!-- List of forms in application -->
+	<form-beans>
+		<form-bean name="bookIssueMasterForm" type="com.montran.form.BookIssueMasterForm" ></form-bean>
+		
+	</form-beans>
+
+	<!-- List of action in application -->
+	<action-mappings>
+		<action path="/bookIssueMasterAction" 
+			type="com.montran.action.BookIssueMasterAction" name="bookIssueMasterForm">
+			<forward name="success" path="/index.jsp" />
+		</action>
+		<action path="/getBookByIdAction" 
+			type="com.montran.action.GetBookByIdAction" name="bookIssueMasterForm">
+			<forward name="success" path="/printBook.jsp" />
+		</action>
+		
+		<action path="/newBookAction" 
+			type="com.montran.action.NewBookAction" name="bookIssueMasterForm">
+			<forward name="success" path="/newBookForm.jsp" />
+		</action>
+		<action path="/updateBookAction" 
+			type="com.montran.action.UpdateBookAction" name="bookIssueMasterForm">
+			<forward name="success" path="/updateBookForm.jsp" />
+		</action>
+		<action path="/deleteBookAction" 
+			type="com.montran.action.DeleteBookAction" name="bookIssueMasterForm">
+			<forward name="success" path="/index.jsp" />
+		</action>
+	</action-mappings>
+	<message-resources parameter="messages" />
+</struts-config>
